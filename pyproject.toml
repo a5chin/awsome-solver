@@ -1,0 +1,20 @@
+[project]
+name = "default"
+version = "0.1.0"
+description = "Add your description here"
+authors = [
+    { name = "a5chin" }
+]
+dependencies = [
+    "mip>=1.14.2",
+]
+readme = "README.md"
+requires-python = ">= 3.12"
+
+[tool.rye]
+managed = true
+dev-dependencies = [
+    "pytest>=8.2.1",
+    "pre-commit>=3.7.0",
+    "ruff>=0.4.4",
+]
