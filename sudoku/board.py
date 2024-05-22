@@ -53,15 +53,15 @@ class Board:
         return self
 
     def __next__(self: "Board") -> list[int]:
-        """Return the next element in the flattened board.
+        """Return the next element in the board.
 
         Raises
         ------
-            StopIteration: If the end of the flattened board is reached.
+            StopIteration: If the end of the board is reached.
 
         Returns
         -------
-            int: The next element in the flattened board.
+            int: The next element in the board.
 
         """
         if self.index >= Board.BOARD_SIZE:
