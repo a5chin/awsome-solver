@@ -80,11 +80,11 @@ class Board:
 
         Args:
         ----
-        other (Board): The other Board object to compare with.
+            other (Board): The other Board object to compare with.
 
         Returns:
         -------
-        bool: True if the two boards are equal, False otherwise.
+            bool: True if the two boards are equal, False otherwise.
 
         """
         if not isinstance(other, Board):
