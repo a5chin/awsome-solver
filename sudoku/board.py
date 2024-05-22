@@ -16,11 +16,10 @@ class Board:
         Args:
         ----
             board (list[list[int]]): The 9x9 cells representing the Number Place board.
-            flatten_board (list[int]): A flattened list of all the board elements.
             index (int): The current index for iteration.
 
         """
-        self.flatten_board = [cell for row in board for cell in row]
+        self.board = board
         self.index = 0
 
     def tolist(self: "Board") -> list[list[int]]:
@@ -31,10 +30,7 @@ class Board:
             list[list[int]]: The Number Place board as a 2D list of integers.
 
         """
-        return [
-            self.flatten_board[i * Board.BOARD_SIZE : (i + 1) * Board.BOARD_SIZE]
-            for i in range(Board.BOARD_SIZE)
-        ]
+        return self.board
 
     def __getitem__(self: "Board", index: int) -> list[int]:
         """Allow for subscriptable access to the board elements.
@@ -48,7 +44,7 @@ class Board:
             list[int]: The specified row of the board.
 
         """
-        return self.flatten_board[index]
+        return self.board[index]
 
     def __iter__(self: "Board") -> "Board":
         """Reset the iteration index and returns the iterator object."""
@@ -56,7 +52,7 @@ class Board:
 
         return self
 
-    def __next__(self: "Board") -> int:
+    def __next__(self: "Board") -> list[int]:
         """Return the next element in the flattened board.
 
         Raises
@@ -68,12 +64,13 @@ class Board:
             int: The next element in the flattened board.
 
         """
-        if self.index >= len(self.flatten_board):
+        if self.index >= Board.BOARD_SIZE:
             raise StopIteration
-        value = self.flatten_board[self.index]
+
+        it = self.board[self.index]
         self.index += 1
 
-        return value
+        return it
 
     def __eq__(self: "Board", other: "Board") -> bool:
         """Check if two Board objects are equal.
@@ -90,7 +87,7 @@ class Board:
         if not isinstance(other, Board):
             return False
 
-        return self.flatten_board == other.flatten_board
+        return self.board == other.board
 
     def __str__(self: "Board") -> str:
         """Return a string representation of the board formatted for easy reading.
@@ -117,17 +114,14 @@ class Board:
         """
         board_str = ""
 
-        for row in range(Board.BOARD_SIZE):
+        for i, row in enumerate(self.board):
             row_str = " | ".join(
-                " ".join(
-                    str(self.flatten_board[row * Board.BOARD_SIZE + col])
-                    for col in range(start, start + Board.BLOCK_SIZE)
-                )
-                for start in range(0, Board.BOARD_SIZE, Board.BLOCK_SIZE)
+                " ".join(str(cell) for cell in row[start : start + Board.BLOCK_SIZE])
+                for start in range(0, len(row), Board.BLOCK_SIZE)
             )
             board_str += row_str + "\n"
 
-            if (row + 1) % Board.BLOCK_SIZE == 0 and (row + 1) < Board.BOARD_SIZE:
+            if (i + 1) % Board.BLOCK_SIZE == 0 and (i + 1) < len(self.board):
                 board_str += "- - - + - - - + - - -\n"
 
         return board_str.strip()
