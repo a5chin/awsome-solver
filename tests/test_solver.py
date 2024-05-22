@@ -6,7 +6,7 @@ import pytest
 current_dir = Path(__file__).resolve().parent
 sys.path.append(current_dir.parent.as_posix())
 
-from solver import Board, Solver  # noqa: E402
+from sudoku import Board, Solver  # noqa: E402
 
 
 @pytest.mark.parametrize(
